@@ -104,7 +104,7 @@ def _handle_runs(char_list):  # pragma: no cover
         if a == b:
             yield a
         else:
-            yield '%s-%s' % (a, b)
+            yield '{}-{}'.format(a, b)
 
 
 if __name__ == '__main__':  # pragma: no cover
@@ -141,13 +141,13 @@ if __name__ == '__main__':  # pragma: no cover
 
         for cat in sorted(categories):
             val = ''.join(_handle_runs(categories[cat]))
-            fp.write('%s = %a\n\n' % (cat, val))
+            fp.write('{} = {!a}\n\n'.format(cat, val))
 
         cats = sorted(categories)
         cats.remove('xid_start')
         cats.remove('xid_continue')
         fp.write('cats = %r\n\n' % cats)
 
-        fp.write('# Generated from unidata %s\n\n' % (unicodedata.unidata_version,))
+        fp.write('# Generated from unidata {}\n\n'.format(unicodedata.unidata_version))
 
         fp.write(footer)

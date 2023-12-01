@@ -54,7 +54,7 @@ class LuaLexer(RegexLexer):
     _comment_multiline = r'(?:--\[(?P<level>=*)\[[\w\W]*?\](?P=level)\])'
     _comment_single = r'(?:--.*$)'
     _space = r'(?:\s+)'
-    _s = r'(?:%s|%s|%s)' % (_comment_multiline, _comment_single, _space)
+    _s = r'(?:{}|{}|{})'.format(_comment_multiline, _comment_single, _space)
     _name = r'(?:[^\W\d]\w*)'
 
     tokens = {
@@ -102,7 +102,7 @@ class LuaLexer(RegexLexer):
         'funcname': [
             include('ws'),
             (r'[.:]', Punctuation),
-            (r'%s(?=%s*[.:])' % (_name, _s), Name.Class),
+            (r'{}(?={}*[.:])'.format(_name, _s), Name.Class),
             (_name, Name.Function, '#pop'),
             # inline function
             (r'\(', Punctuation, '#pop'),

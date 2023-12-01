@@ -2,7 +2,7 @@ def foo():
     ur"""unicode-raw"""
 
 def bar():
-    u"""unicode"""
+    """unicode"""
 
 def baz():
     r'raw'

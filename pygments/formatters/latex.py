@@ -329,7 +329,7 @@ class LatexFormatter(Formatter):
         cp = self.commandprefix
         styles = []
         for name, definition in self.cmd2def.items():
-            styles.append(r'\@namedef{%s@tok@%s}{%s}' % (cp, name, definition))
+            styles.append(r'\@namedef{{{}@tok@{}}}{{{}}}'.format(cp, name, definition))
         return STYLE_TEMPLATE % {'cp': self.commandprefix,
                                  'styles': '\n'.join(styles)}
 
@@ -410,10 +410,10 @@ class LatexFormatter(Formatter):
                 spl = value.split('\n')
                 for line in spl[:-1]:
                     if line:
-                        outfile.write("\\%s{%s}{%s}" % (cp, styleval, line))
+                        outfile.write("\\{}{{{}}}{{{}}}".format(cp, styleval, line))
                     outfile.write('\n')
                 if spl[-1]:
-                    outfile.write("\\%s{%s}{%s}" % (cp, styleval, spl[-1]))
+                    outfile.write("\\{}{{{}}}{{{}}}".format(cp, styleval, spl[-1]))
             else:
                 outfile.write(value)
 

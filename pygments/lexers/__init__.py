@@ -160,7 +160,7 @@ def load_lexer_from_file(filename, lexername="CustomLexer", **options):
         # And finally instantiate it with the options
         return lexer_class(**options)
     except OSError as err:
-        raise ClassNotFound('cannot read %s: %s' % (filename, err))
+        raise ClassNotFound('cannot read {}: {}'.format(filename, err))
     except ClassNotFound:
         raise
     except Exception as err:

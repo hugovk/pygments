@@ -150,7 +150,7 @@ def main(fn, lexer=None, options={}):
         lxcls = get_lexer_by_name(lexer).__class__
     elif guess:
         lxcls = guess_lexer(text).__class__
-        print('Using lexer: %s (%s.%s)' % (lxcls.name, lxcls.__module__,
+        print('Using lexer: {} ({}.{})'.format(lxcls.name, lxcls.__module__,
                                            lxcls.__name__))
     else:
         lxcls = find_lexer_class_for_filename(os.path.basename(fn))
@@ -159,7 +159,7 @@ def main(fn, lexer=None, options={}):
             lxcls = find_lexer_class(name)
             if lxcls is None:
                 raise AssertionError('no lexer found for file %r' % fn)
-        print('Using lexer: %s (%s.%s)' % (lxcls.name, lxcls.__module__,
+        print('Using lexer: {} ({}.{})'.format(lxcls.name, lxcls.__module__,
                                            lxcls.__name__))
     debug_lexer = False
     # if profile:

@@ -314,7 +314,7 @@ class CommonLispLexer(RegexLexer):
 
     # symbol token, reverse-engineered from hyperspec
     # Take a deep breath...
-    symbol = r'(\|[^|]+\||(?:%s)(?:%s)*)' % (nonmacro, constituent)
+    symbol = r'(\|[^|]+\||(?:{})(?:{})*)'.format(nonmacro, constituent)
 
     def __init__(self, **options):
         from pygments.lexers._cl_builtins import BUILTIN_FUNCTIONS, \
@@ -1393,13 +1393,13 @@ class RacketLexer(RegexLexer):
     _inexact_simple_no_hashes = r'(?:\d+(?:/\d+|\.\d*)?|\.\d+)'
     _inexact_simple = (r'(?:%s|(?:\d+#+(?:\.#*|/\d+#*)?|\.\d+#+|'
                        r'\d+(?:\.\d*#+|/\d+#+)))' % _inexact_simple_no_hashes)
-    _inexact_normal_no_hashes = r'(?:%s%s?)' % (_inexact_simple_no_hashes,
+    _inexact_normal_no_hashes = r'(?:{}{}?)'.format(_inexact_simple_no_hashes,
                                                 _exponent)
-    _inexact_normal = r'(?:%s%s?)' % (_inexact_simple, _exponent)
+    _inexact_normal = r'(?:{}{}?)'.format(_inexact_simple, _exponent)
     _inexact_special = r'(?:(?:inf|nan)\.[0f])'
-    _inexact_real = r'(?:[-+]?%s|[-+]%s)' % (_inexact_normal,
+    _inexact_real = r'(?:[-+]?{}|[-+]{})'.format(_inexact_normal,
                                              _inexact_special)
-    _inexact_unsigned = r'(?:%s|%s)' % (_inexact_normal, _inexact_special)
+    _inexact_unsigned = r'(?:{}|{})'.format(_inexact_normal, _inexact_special)
 
     tokens = {
         'root': [
@@ -1419,7 +1419,7 @@ class RacketLexer(RegexLexer):
             # onto Pygments token types; some judgment calls here.
 
             # #d or no prefix
-            (r'(?i)%s[-+]?\d+(?=[%s])' % (_exact_decimal_prefix, _delimiters),
+            (r'(?i){}[-+]?\d+(?=[{}])'.format(_exact_decimal_prefix, _delimiters),
              Number.Integer, '#pop'),
             (r'(?i)%s[-+]?(\d+(\.\d*)?|\.\d+)([deflst][-+]?\d+)?(?=[%s])' %
              (_exact_decimal_prefix, _delimiters), Number.Float, '#pop'),
@@ -1690,7 +1690,7 @@ class EmacsLispLexer(RegexLexer):
 
     # symbol token, reverse-engineered from hyperspec
     # Take a deep breath...
-    symbol = r'((?:%s)(?:%s)*)' % (nonmacro, constituent)
+    symbol = r'((?:{})(?:{})*)'.format(nonmacro, constituent)
 
     macros = {
         'atomic-change-group', 'case', 'block', 'cl-block', 'cl-callf', 'cl-callf2',

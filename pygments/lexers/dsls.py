@@ -763,7 +763,7 @@ class CrmshLexer(RegexLexer):
             (sub, Keyword),
             (acl, Keyword),
             # binary operators
-            (r'(?:%s:)?(%s)(?![\w#$-])' % (val_qual, bin_ops), Operator.Word),
+            (r'(?:{}:)?({})(?![\w#$-])'.format(val_qual, bin_ops), Operator.Word),
             # other operators
             (bin_rel, Operator.Word),
             (un_ops, Operator.Word),
@@ -945,9 +945,9 @@ class SnowballLexer(ExtendedRegexLexer):
             (words(('size', 'limit', 'cursor', 'maxint', 'minint'),
                    suffix=r'\b'),
              Name.Builtin),
-            (r'(stringdef\b)([%s]*)([^%s]+)' % (_ws, _ws),
+            (r'(stringdef\b)([{}]*)([^{}]+)'.format(_ws, _ws),
              bygroups(Keyword.Reserved, Whitespace, String.Escape)),
-            (r'(stringescapes\b)([%s]*)(.)([%s]*)(.)' % (_ws, _ws),
+            (r'(stringescapes\b)([{}]*)(.)([{}]*)(.)'.format(_ws, _ws),
              _stringescapes),
             (r'[A-Za-z]\w*', Name),
         ],

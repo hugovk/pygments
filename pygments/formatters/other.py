@@ -147,7 +147,7 @@ class TestcaseFormatter(Formatter):
         outbuf = []
         for ttype, value in tokensource:
             rawbuf.append(value)
-            outbuf.append('%s(%s, %r),\n' % (indentation, ttype, value))
+            outbuf.append('{}({}, {!r}),\n'.format(indentation, ttype, value))
 
         before = TESTCASE_BEFORE % (''.join(rawbuf),)
         during = ''.join(outbuf)

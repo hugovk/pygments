@@ -20,7 +20,7 @@ jsonnet_function_token = jsonnet_token + r'(?=\()'
 
 def string_rules(quote_mark):
     return [
-        (r"[^{}\\]".format(quote_mark), String),
+        (fr"[^{quote_mark}\\]", String),
         (r"\\.", String.Escape),
         (quote_mark, String, '#pop'),
     ]

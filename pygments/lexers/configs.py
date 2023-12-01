@@ -258,7 +258,7 @@ def _rx_indent(level):
         level_repeat = ''
     else:
         level_repeat = '{%s}' % level
-    return r'(?:\t| %s\t| {%s})%s.*\n' % (space_repeat, tab_width, level_repeat)
+    return r'(?:\t| {}\t| {{{}}}){}.*\n'.format(space_repeat, tab_width, level_repeat)
 
 
 class KconfigLexer(RegexLexer):
@@ -667,15 +667,15 @@ class DockerLexer(RegexLexer):
             (r'#.*', Comment),
             (r'(FROM)([ \t]*)(\S*)([ \t]*)(?:(AS)([ \t]*)(\S*))?',
              bygroups(Keyword, Whitespace, String, Whitespace, Keyword, Whitespace, String)),
-            (r'(ONBUILD)(\s+)(%s)' % (_lb,), bygroups(Keyword, Whitespace, using(BashLexer))),
-            (r'(HEALTHCHECK)(\s+)((%s--\w+=\w+%s)*)' % (_lb, _lb),
+            (r'(ONBUILD)(\s+)({})'.format(_lb), bygroups(Keyword, Whitespace, using(BashLexer))),
+            (r'(HEALTHCHECK)(\s+)(({}--\w+=\w+{})*)'.format(_lb, _lb),
                 bygroups(Keyword, Whitespace, using(BashLexer))),
-            (r'(VOLUME|ENTRYPOINT|CMD|SHELL)(\s+)(%s)(\[.*?\])' % (_lb,),
+            (r'(VOLUME|ENTRYPOINT|CMD|SHELL)(\s+)({})(\[.*?\])'.format(_lb),
                 bygroups(Keyword, Whitespace, using(BashLexer), using(JsonLexer))),
-            (r'(LABEL|ENV|ARG)(\s+)((%s\w+=\w+%s)*)' % (_lb, _lb),
+            (r'(LABEL|ENV|ARG)(\s+)(({}\w+=\w+{})*)'.format(_lb, _lb),
                 bygroups(Keyword, Whitespace, using(BashLexer))),
             (r'(%s|VOLUME)\b(\s+)(.*)' % (_keywords), bygroups(Keyword, Whitespace, String)),
-            (r'(%s)(\s+)' % (_bash_keywords,), bygroups(Keyword, Whitespace)),
+            (r'({})(\s+)'.format(_bash_keywords), bygroups(Keyword, Whitespace)),
             (r'(.*\\\n)*.+', using(BashLexer)),
         ]
     }

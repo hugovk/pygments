@@ -25,15 +25,12 @@ class \
 
 class Spam: pass
 
-class Spam(object):
+class Spam:
     pass
 
 class \
  Spam \
-  (
-   object
- ) \
- :
+  :
  pass
 
 

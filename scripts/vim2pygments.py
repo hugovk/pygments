@@ -917,7 +917,7 @@ def main():
         print('Usage: %s <filename.vim>' % sys.argv[0])
         return 2
     if sys.argv[1] in ('-v', '--version'):
-        print('%s %s' % (SCRIPT_NAME, SCRIPT_VERSION))
+        print('{} {}'.format(SCRIPT_NAME, SCRIPT_VERSION))
         return
     filename = sys.argv[1]
     if not (path.exists(filename) and path.isfile(filename)):

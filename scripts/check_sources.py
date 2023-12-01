@@ -177,7 +177,7 @@ def main(argv):
                 with open(fn, 'rb') as f:
                     lines = f.read().decode('utf-8').splitlines()
             except OSError as err:
-                print("%s: cannot open: %s" % (fn, err))
+                print("{}: cannot open: {}".format(fn, err))
                 num += 1
                 continue
 

@@ -146,7 +146,7 @@ class SvgFormatter(Formatter):
             line_x += self.linenowidth + self.ystep
             counter += 1
 
-        outfile.write('<text x="%s" y="%s" xml:space="preserve">' % (line_x, y))
+        outfile.write('<text x="{}" y="{}" xml:space="preserve">'.format(line_x, y))
         for ttype, value in tokensource:
             style = self._get_style(ttype)
             tspan = style and '<tspan' + style + '>' or ''

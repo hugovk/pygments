@@ -26,7 +26,7 @@ HEADER = '''\
 if __name__ == "__main__":
     data_request = urllib.request.urlopen('https://www.w3.org/Style/CSS/all-properties.en.json')
     data = json.load(data_request)
-    names = set([p['property'] for p in data if p['property'] != '--*'])
+    names = {p['property'] for p in data if p['property'] != '--*'}
 
     with open('../pygments/lexers/_css_builtins.py', 'w', encoding='utf-8') as builtin_file:
         builtin_file.write(HEADER)

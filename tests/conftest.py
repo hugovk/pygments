@@ -39,8 +39,8 @@ class LexerTestItem(pytest.Item):
     def _prettyprint_tokens(cls, tokens):
         for tok, val in tokens:
             if tok is Error and not cls.allow_errors:
-                raise ValueError('generated Error token at {!r}'.format(val))
-            yield '{!r:<13} {}'.format(val, str(tok)[6:])
+                raise ValueError(f'generated Error token at {val!r}')
+            yield f'{val!r:<13} {str(tok)[6:]}'
             if val.endswith('\n'):
                 yield ''
 

@@ -190,10 +190,10 @@ class ErlangShellLexer(Lexer):
 def gen_elixir_string_rules(name, symbol, token):
     states = {}
     states['string_' + name] = [
-        (r'[^#%s\\]+' % (symbol,), token),
+        (r'[^#{}\\]+'.format(symbol), token),
         include('escapes'),
         (r'\\.', token),
-        (r'(%s)' % (symbol,), bygroups(token), "#pop"),
+        (r'({})'.format(symbol), bygroups(token), "#pop"),
         include('interpol')
     ]
     return states
@@ -202,17 +202,17 @@ def gen_elixir_string_rules(name, symbol, token):
 def gen_elixir_sigstr_rules(term, term_class, token, interpol=True):
     if interpol:
         return [
-            (r'[^#%s\\]+' % (term_class,), token),
+            (r'[^#{}\\]+'.format(term_class), token),
             include('escapes'),
             (r'\\.', token),
-            (r'%s[a-zA-Z]*' % (term,), token, '#pop'),
+            (r'{}[a-zA-Z]*'.format(term), token, '#pop'),
             include('interpol')
         ]
     else:
         return [
-            (r'[^%s\\]+' % (term_class,), token),
+            (r'[^{}\\]+'.format(term_class), token),
             (r'\\.', token),
-            (r'%s[a-zA-Z]*' % (term,), token, '#pop'),
+            (r'{}[a-zA-Z]*'.format(term), token, '#pop'),
         ]
 
 
@@ -301,9 +301,9 @@ class ElixirLexer(RegexLexer):
 
         for term, name in triquotes:
             states['sigils'] += [
-                (r'(~[a-z])(%s)' % (term,), bygroups(token, String.Heredoc),
+                (r'(~[a-z])({})'.format(term), bygroups(token, String.Heredoc),
                     (name + '-end', name + '-intp')),
-                (r'(~[A-Z])(%s)' % (term,), bygroups(token, String.Heredoc),
+                (r'(~[A-Z])({})'.format(term), bygroups(token, String.Heredoc),
                     (name + '-end', name + '-no-intp')),
             ]
 
@@ -335,12 +335,12 @@ class ElixirLexer(RegexLexer):
     op3_re = "|".join(re.escape(s) for s in OPERATORS3)
     op2_re = "|".join(re.escape(s) for s in OPERATORS2)
     op1_re = "|".join(re.escape(s) for s in OPERATORS1)
-    ops_re = r'(?:%s|%s|%s)' % (op3_re, op2_re, op1_re)
+    ops_re = r'(?:{}|{}|{})'.format(op3_re, op2_re, op1_re)
     punctuation_re = "|".join(re.escape(s) for s in PUNCTUATION)
     alnum = r'\w'
     name_re = r'(?:\.\.\.|[a-z_]%s*[!?]?)' % alnum
-    modname_re = r'[A-Z]%(alnum)s*(?:\.[A-Z]%(alnum)s*)*' % {'alnum': alnum}
-    complex_name_re = r'(?:%s|%s|%s)' % (name_re, modname_re, ops_re)
+    modname_re = r'[A-Z]{alnum}*(?:\.[A-Z]{alnum}*)*'.format(alnum=alnum)
+    complex_name_re = r'(?:{}|{}|{})'.format(name_re, modname_re, ops_re)
     special_atom_re = r'(?:\.\.\.|<<>>|%\{\}|%|\{\})'
 
     long_hex_char_re = r'(\\x\{)([\da-fA-F]+)(\})'
@@ -373,7 +373,7 @@ class ElixirLexer(RegexLexer):
             (r":'", String.Symbol, 'string_single_atom'),
 
             # [keywords: ...]
-            (r'(%s|%s)(:)(?=\s|\n)' % (special_atom_re, complex_name_re),
+            (r'({}|{})(:)(?=\s|\n)'.format(special_atom_re, complex_name_re),
                 bygroups(String.Symbol, Punctuation)),
 
             # @attributes
@@ -381,7 +381,7 @@ class ElixirLexer(RegexLexer):
 
             # identifiers
             (name_re, Name),
-            (r'(%%?)(%s)' % (modname_re,), bygroups(Punctuation, Name.Class)),
+            (r'(%?)({})'.format(modname_re), bygroups(Punctuation, Name.Class)),
 
             # operators and punctuation
             (op3_re, Operator),

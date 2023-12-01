@@ -174,7 +174,7 @@ class Lexer(metaclass=LexerMeta):
 
     def __repr__(self):
         if self.options:
-            return '<pygments.lexers.%s with %r>' % (self.__class__.__name__,
+            return '<pygments.lexers.{} with {!r}>'.format(self.__class__.__name__,
                                                      self.options)
         else:
             return '<pygments.lexers.%s>' % self.__class__.__name__
@@ -511,7 +511,7 @@ class RegexLexerMeta(LexerMeta):
     def _process_token(cls, token):
         """Preprocess the token component of a token definition."""
         assert type(token) is _TokenType or callable(token), \
-            'token type must be simple type or callable, not %r' % (token,)
+            'token type must be simple type or callable, not {!r}'.format(token)
         return token
 
     def _process_new_state(cls, new_state, unprocessed, processed):
@@ -773,7 +773,7 @@ class LexerContext:
         self.stack = stack or ['root']
 
     def __repr__(self):
-        return 'LexerContext(%r, %r, %r)' % (
+        return 'LexerContext({!r}, {!r}, {!r})'.format(
             self.text, self.pos, self.stack)
 
 

@@ -109,7 +109,7 @@ def load_formatter_from_file(filename, formattername="CustomFormatter", **option
         # And finally instantiate it with the options
         return formatter_class(**options)
     except OSError as err:
-        raise ClassNotFound('cannot read %s: %s' % (filename, err))
+        raise ClassNotFound('cannot read {}: {}'.format(filename, err))
     except ClassNotFound:
         raise
     except Exception as err:
