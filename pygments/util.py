@@ -23,7 +23,7 @@ doctype_lookup_re = re.compile(r'''
      )
      [^>]*>
 ''', re.DOTALL | re.MULTILINE | re.VERBOSE)
-tag_re = re.compile(r'<(.+?)(\s.*?)?>.*?</.+?>',
+tag_re = re.compile(r'<([a-zA-Z][a-zA-Z0-9._:-]*)(\s[^>]*)?>.*?</\1\s*>',
                     re.IGNORECASE | re.DOTALL | re.MULTILINE)
 xml_decl_re = re.compile(r'\s*<\?xml[^>]*\?>', re.I)
 
@@ -324,7 +324,7 @@ class UnclosingTextIOWrapper(TextIOWrapper):
     def close(self):
         self.flush()
 
-def html_escape(string, quote=True):
+def html_escape(string, quote=True) -> str:
     """Return a safe version of the passed `string`,
     and an empty string if `None`.
 
@@ -337,5 +337,5 @@ def html_escape(string, quote=True):
     See https://docs.python.org/3/library/html.html#html.escape for more details.
     """
     if string is not None:
-        return html.escape(string, quote=quote)
+        return html.escape(str(string), quote=quote)
     return ''
